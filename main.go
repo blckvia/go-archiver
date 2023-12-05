@@ -1,4 +1,4 @@
-package go_archiver
+package main
 
 import "go-archiver/cmd"
 
