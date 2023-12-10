@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/spf13/cobra"
+	"go-archiver/lib/vlc"
 	"io"
 	"os"
 	"path/filepath"
@@ -37,8 +38,7 @@ func pack(_ *cobra.Command, args []string) {
 		handleErr(err)
 	}
 
-	// packed := Encode(data)
-	packed := ""
+	packed := vlc.Encode(string(data))
 	fmt.Println(string(data))
 
 	err = os.WriteFile(packedFileName(filePath), []byte(packed), 0644)

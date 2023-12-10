@@ -23,16 +23,33 @@ const chunkSize = 8
 func Encode(str string) string {
 	str = prepareText(str)
 
-	bStr := encodeBin(str)
-
-	chunks := splitByChunks(bStr, chunkSize)
-
-	fmt.Println(chunks)
+	chunks := splitByChunks(encodeBin(str), chunkSize)
 
 	chunks.ToHex()
 
-	// return string
-	return ""
+	return chunks.ToHex().ToString()
+}
+
+func (hcs HexChunks) ToString() string {
+	const sep = " "
+
+	switch len(hcs) {
+	case 0:
+		return ""
+	case 1:
+		return string(hcs[0])
+	}
+
+	var buf strings.Builder
+
+	buf.WriteString(string(hcs[0]))
+
+	for _, hc := range hcs[1:] {
+		buf.WriteString(sep)
+		buf.WriteString(string(hc))
+	}
+
+	return buf.String()
 }
 
 func (bsc BinaryChunks) ToHex() HexChunks {
